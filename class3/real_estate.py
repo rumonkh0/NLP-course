@@ -32,7 +32,9 @@ for i in range(1, 21):
     try:
         i = str(i)
         li_elements = driver.find_elements(By.XPATH, f"/html/body/div[1]/div[2]/div/div/ul[{i}]/li")
-
+        company_name = driver.find_element(By.XPATH, f"/html/body/div[1]/div[2]/div/div/h3[{i}]/span/strong").text
+        name = re.sub(r"^\d+\.\s*", "", company_name)
+        print(name,'--------------------------------')
         phone_number = None
         telephone_number = None
         tel_numbers = []
