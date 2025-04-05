@@ -43,14 +43,11 @@ namelist = []
 phonelist = []
 
 track = 1
-ic = 20
 while True:
 # for i in range(3):
     print('tracking page: ', track)
     track = track + 1
-    # driver.execute_script("arguments[0].scrollTop = arguments[0].scrollHeight", scrollable_div)
-    link = f'https://www.google.com/localservices/prolist?g2lbs=AAEPWCu8deRlO9zttYCnR-KOt3R8Wa9ZPSJ6ZfXtZc-sTDCctWrj9OINqUM21Ws26hQxrFDMy_3Dy1ZHHAA5cBf8W6iruiguww%3D%3D&hl=en-BD&gl=bd&cs=1&ssta=1&oq=Top%2050%20real%20estate%20company%20in%20Bangladesh&src=2&sa=X&q=real%20estate%20company%20in%20Bangladesh&ved=2ahUKEwiS_87PjMCMAxXHzIQAHWRkCMAQjdcJegQIABAF&slp=MgBAAVIECAIgAGgBiAEAmgEGCgIXGRAA&scp=CgASICIIbWFwIGFyZWEqFA1frBoNFdivRjUd-6BrDiUK8Ek3GgAqAA%3D%3D&lci={ic}'
-    ic = ic + 20
+    driver.execute_script("arguments[0].scrollTop = arguments[0].scrollHeight", scrollable_div)
     for j in range(1,40,2):
         c=str(j)
         phone = None
@@ -69,20 +66,22 @@ while True:
         except:
             print("no phone number")
         phonelist.append(phone)
-
+        
 
     # Go to next pages
+    time.sleep(2)
     try:
         button = driver.find_element(By.XPATH, '//*[@id="yDmH0d"]/c-wiz/div/div[3]/div/div/div[1]/div[3]/div[3]/c-wiz/div/div/div[2]/div[2]/div/button/span')
+        driver.execute_script("arguments[0].click();", button)
     except:
         if flag:
             print("All pages are visited.")
             break
         button = driver.find_element(By.XPATH, '//*[@id="yDmH0d"]/c-wiz/div/div[3]/div/div/div[1]/div[3]/div[3]/c-wiz/div/div/div[2]/div/div/button/span')
+        driver.execute_script("arguments[0].click();", button)
         flag = True
 
-    driver.get(link)
-    time.sleep(3)
+    time.sleep(2)
 
 
 df = pd.DataFrame({'Name': namelist, 'Phone': phonelist})
