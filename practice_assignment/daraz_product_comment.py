@@ -1,5 +1,4 @@
 from selenium import webdriver
-from selenium.webdriver.chrome.service import Service
 from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support import expected_conditions as EC
@@ -29,6 +28,7 @@ driver = webdriver.Chrome(options=chrome_options)
 link = 'https://www.daraz.com.bd/products/c001-i347762802-s1703060973.html'
 link = 'https://www.daraz.com.bd/products/lotto-4l-lotto-i273872893-s1248847224.html'
 link = 'https://www.daraz.com.bd/products/m7171-i453299157-s2170345155.html'
+link = 'https://www.daraz.com.bd/products/lotto-4l-lotto-i273872893-s1248847224.html'
 
 driver.get(link)
 
@@ -45,15 +45,21 @@ time.sleep(10)
 scroll_page()
 time.sleep(5)
 
-comments = []
-
+comments_dict = {}
+page = 1
 while True:
+    comments = []
     for i in range(1, 6):
         try:
             comment = driver.find_element(By.XPATH, f'//*[@id="module_product_review"]/div/div/div[3]/div[1]/div[{i}]/div[3]/div[1]').text
             comments.append(comment)
         except:
             pass
+
+    comments_dict[page] = comments
+    page += 1
+    if page > 20:
+        break
 
     try:
         button = driver.find_element(By.XPATH, '//*[@id="module_product_review"]/div/div/div[3]/div[2]/div/button[2]')
@@ -72,13 +78,13 @@ while True:
         break
 
 # //*[@id="module_product_qna"]/div/div[2]/div[2]/div[2]/div/button[2]
-df = pd.DataFrame({'comment':comments})
-df.to_csv('comments.csv', index=False)
+# df = pd.DataFrame({'comment':comments})
+# df.to_csv('comments.csv', index=False)
 # for comment in comments:
 #     print(comment)
-data_dict = df.to_dict(orient='list')
+# data_dict = df.to_dict(orient='list')
 with open('comments.json', 'w', encoding='utf-8') as f:
-    json.dump(data_dict, f, ensure_ascii=False, indent=4)
+    json.dump(comments_dict, f, ensure_ascii=False, indent=4)
 
 driver.quit()
 
