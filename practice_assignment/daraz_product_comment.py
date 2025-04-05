@@ -4,7 +4,7 @@ from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support import expected_conditions as EC
 import pandas as pd
-import math
+import json
 import re
 import time
 import os
@@ -62,6 +62,7 @@ while True:
         else:
             # button.click()
             driver.execute_script("arguments[0].click();", button)
+            time.sleep(1)
             print('Next button clicked.')
     except:
         print("ERROR: Cannot find next button")
@@ -72,6 +73,9 @@ df = pd.DataFrame({'comment':comments})
 df.to_csv('comments.csv', index=False)
 # for comment in comments:
 #     print(comment)
+data_dict = df.to_dict(orient='list')
+with open('comments.json', 'w', encoding='utf-8') as f:
+    json.dump(data_dict, f, ensure_ascii=False, indent=4)
 
 driver.quit()
 
