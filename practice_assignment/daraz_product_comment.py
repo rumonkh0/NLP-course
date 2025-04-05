@@ -27,7 +27,8 @@ chrome_options.add_argument("user-agent=Mozilla/5.0 (Windows NT 10.0; Win64; x64
 # Initialize the driver
 driver = webdriver.Chrome(options=chrome_options)
 link = 'https://www.daraz.com.bd/products/c001-i347762802-s1703060973.html'
-link = 'https://www.daraz.com.bd/products/men-shoes-luxury-trendy-casual-slip-on-formal-loafers-men-black-male-driving-shoes-i461336579-s2208609434.html'
+link = 'https://www.daraz.com.bd/products/lotto-4l-lotto-i273872893-s1248847224.html'
+link = 'https://www.daraz.com.bd/products/m7171-i453299157-s2170345155.html'
 
 driver.get(link)
 
@@ -37,6 +38,9 @@ def scroll_page():
         driver.execute_script(f"window.scrollTo(0, {i});")
         time.sleep(0.1)
 
+
+time.sleep(10)
+driver.execute_script("location.reload()")
 time.sleep(10)
 scroll_page()
 time.sleep(5)
@@ -53,17 +57,16 @@ while True:
 
     try:
         button = driver.find_element(By.XPATH, '//*[@id="module_product_review"]/div/div/div[3]/div[2]/div/button[2]')
-        print('button found: ', button)
+        # print('button found: ', button)
         is_disabled = button.get_attribute('disabled') is not None
-        print('is_disabled CHECK', is_disabled)
+        # print('is_disabled CHECK', is_disabled)
         if is_disabled:
             print("All comment scrapped.")
             break
         else:
             # button.click()
             driver.execute_script("arguments[0].click();", button)
-            time.sleep(1)
-            print('Next button clicked.')
+            time.sleep(1.5)
     except:
         print("ERROR: Cannot find next button")
         break
