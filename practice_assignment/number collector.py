@@ -26,12 +26,12 @@ chrome_options.add_argument("user-agent=Mozilla/5.0 (Windows NT 10.0; Win64; x64
 
 # Initialize the driver
 driver = webdriver.Chrome(options=chrome_options)
-wait = WebDriverWait(driver, 4)
 query = 'laptop shop near me'
 # query = input("Enter your search term:  ")
 link = f"https://www.google.com/search?tbm=lcl&q={query.replace(' ', '+')}"
 driver.get(link)
-time.sleep(5)
+wait = WebDriverWait(driver, 7)
+time.sleep(7)
 
 names = []
 mobile_numbers = []
@@ -42,7 +42,7 @@ total = 100
 while True:
     page += 1
     print('scripping page-------------------------------------', page)
-    initial_text = "None"
+    initial_text = "init"
     for i in range(1, 21):
         print(i)
         c = str(i*2)
@@ -50,18 +50,19 @@ while True:
             ele = driver.find_element(By.XPATH, f'/html/body/div[2]/div/div[7]/div[1]/div/div[2]/div[2]/div/div/div/div/div/div/div/div{ '/div' if page != 1 else '' }/div[1]/div[3]/div[{c}]/div[2]/div/div/a[1]/div/div/div[1]/span')
             name = ele.text
             print(name)
-            add = driver.find_element(By.XPATH, f'/html/body/div[2]/div/div[7]/div[1]/div/div[2]/div[2]/div/div/div/div/div/div/div/div{ '/div' if page != 1 else '' }/div[1]/div[3]/div[{c}]/div[2]/div/div/a[1]/div/div/div[3]')
+            add = driver.find_element(By.XPATH, f'/html/body/div[2]/div/div[7]/div[1]/div/div[2]/div[2]/div/div/div/div/div/div/div/div{ '/div' if page != 1 else '' }/div[1]/div[3]/div[{c}]/div[2]/div/div/a[1]/div/div/div[3]').text
             print(add)
             driver.execute_script("arguments[0].click();", ele)
+            if i == 1: time.sleep(4)
             try:
                 wait.until(lambda driver: driver.find_element(By.XPATH, '//*[@data-attrid="kc:/local:alt phone"]').text != initial_text)
-                wait.until(EC.presence_of_element_located((By.XPATH, '//*[@data-attrid="kc:/local:alt phone"]')))
-                wait.until(EC.visibility_of_element_located((By.XPATH, '//*[@data-attrid="kc:/local:alt phone"]')))
+                # wait.until(EC.presence_of_element_located((By.XPATH, '//*[@data-attrid="kc:/local:alt phone"]')))
+                # wait.until(EC.visibility_of_element_located((By.XPATH, '//*[@data-attrid="kc:/local:alt phone"]')))
                 # time.sleep(3)
+                print("<<<<<<<")
+                wait.until(lambda driver: driver.find_element(By.XPATH, '//*[@data-attrid="kc:/local:alt phone"]').is_displayed())
                 element = driver.find_element(By.XPATH, '//*[@data-attrid="kc:/local:alt phone"]')
-                wait.until(lambda driver: element.is_displayed())
-                if not element.is_displayed():
-                     print('not displayed>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>')
+                print(element.is_displayed())
                 print('ele->>>>',element.text)
                 # phone_span = target_element = element.find_element(By.XPATH, './div/div/span[2]/span/a/span')
                 phone_number = re.sub(r'\D', '', element.text)
@@ -74,7 +75,10 @@ while True:
                     print("Reached the total count. Creating csv file...")
                     break
             except Exception as e:
-                 print("no mobile number%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%")
+                 print("no mobile number%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>%")
+            
+            close = driver.find_element(By.XPATH, '/html/body/div[2]/div/div[7]/div[2]/div/div[2]/div/div/div')
+            driver.execute_script("arguments[0].click();", close)
         except Exception as e:
             print("Error to find element")
     if count >= total:
@@ -87,7 +91,6 @@ while True:
     except Exception as e:
         print("Next button not found. Creating csv")
         break
-    time.sleep(5)
 
 print("creating csv file")
 df = pd.DataFrame({"Name": names, "Mobile": mobile_numbers})

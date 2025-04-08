@@ -12,7 +12,7 @@ last_height = driver.execute_script("return arguments[0].scrollHeight", scrollab
 
 while True:
     # Scroll down by 500 pixels
-    driver.execute_script("arguments[0].scrollTop += 500", scrollable_div)
+    driver.execute_script("arguments[0].scrollTop = arguments[0].scrollHeight", scrollable_div)
     time.sleep(1)  # Wait for content to load
     
     # Get new scroll height
@@ -22,3 +22,6 @@ while True:
     if new_height == last_height:
         break
     last_height = new_height
+
+#click_button
+    driver.execute_script("arguments[0].click();", button)

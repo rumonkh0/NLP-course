@@ -33,6 +33,7 @@ names = []
 mobile_numbers = []
 count = 0
 page = 20
+total = 30
 
 while True:
     print('scripping page', page)
@@ -49,14 +50,14 @@ while True:
                 names.append(name)
                 mobile_numbers.append(mobile_number)
                 count += 1
-                if count >= 100:
+                if count >= total:
                     break
             #     print(f"Name: {name}, Mobile Number: {mobile_number}")
 
         except:
             print("Error to find element")
 
-    if count >= 100:
+    if count >= total:
         break
         
     link = f'https://www.google.com/search?q=laptop+shop+near+mirpur%2C+dhaka&sca_esv=cbf74057595eaae5&biw=1920&bih=961&tbm=lcl&sxsrf=AHTn8zr4ff0QJNTwR33vpZTS4xBpTn5tcA%3A1743862643088&ei=czvxZ4aIBcqb4-EP34mg2Ak&oq=laptop+shop+near+mirpur&gs_lp=Eg1nd3Mtd2l6LWxvY2FsIhdsYXB0b3Agc2hvcCBuZWFyIG1pcnB1cioCCAAyBBAjGCcyCBAAGIAEGKIEMggQABiABBiiBDIIEAAYogQYiQVI2CVQtAxYthdwAngAkAEBmAHzAqAB0hCqAQcwLjEuNS4yuAEByAEA-AEBmAIJoAKHD8ICChAAGIAEGEMYigXCAgUQABiABMICBxAAGIAEGA2YAwCIBgGSBwcyLjAuNS4yoAf3M7IHBTItNS4yuAf2Dg&sclient=gws-wiz-local#rlfi=hd:;si:;mv:[[23.8275129,90.3801258],[23.775847799999998,90.3629698]];start:{page}'
