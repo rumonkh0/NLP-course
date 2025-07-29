@@ -16,13 +16,14 @@ import os
 # os.environ['PATH'] += os.pathsep + '/usr/bin/chromedriver'
 
 # Set up Chrome options
+print("one")
 chrome_options = Options()
 # chrome_options.add_argument("--headless")
 chrome_options.add_argument("--no-sandbox")
 chrome_options.add_argument("--disable-dev-shm-usage")
 chrome_options.add_argument("--window-size=1920,1080")
 chrome_options.add_argument("user-agent=Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36")
-
+print('two')
 # Initialize the driver
 driver = webdriver.Chrome(options=chrome_options)
 link = 'https://www.google.com/search?q=laptop+shop+near+mirpur%2C+dhaka&sca_esv=cbf74057595eaae5&biw=1920&bih=961&tbm=lcl&sxsrf=AHTn8zr4ff0QJNTwR33vpZTS4xBpTn5tcA%3A1743862643088&ei=czvxZ4aIBcqb4-EP34mg2Ak&oq=laptop+shop+near+mirpur&gs_lp=Eg1nd3Mtd2l6LWxvY2FsIhdsYXB0b3Agc2hvcCBuZWFyIG1pcnB1cioCCAAyBBAjGCcyCBAAGIAEGKIEMggQABiABBiiBDIIEAAYogQYiQVI2CVQtAxYthdwAngAkAEBmAHzAqAB0hCqAQcwLjEuNS4yuAEByAEA-AEBmAIJoAKHD8ICChAAGIAEGEMYigXCAgUQABiABMICBxAAGIAEGA2YAwCIBgGSBwcyLjAuNS4yoAf3M7IHBTItNS4yuAf2Dg&sclient=gws-wiz-local#rlfi=hd:;si:;mv:[[23.8275129,90.3801258],[23.775847799999998,90.3629698]];start:0'

@@ -39,7 +39,7 @@ addresses = []
 websites = []
 count = 0
 page = 0
-total = 100
+total = 1
 while True:
     page += 1
     print('scripping page-------------------------------------', page)
@@ -111,7 +111,7 @@ while True:
 
 print("creating csv file")
 df = pd.DataFrame({"Name": names, "Mobile": mobile_numbers, "website": websites, "address": addresses})
-df.to_csv('resturant.csv', index=False)
+df.to_csv(f"{'_'.join(query.split(' '))}.csv", index=False)
 print("CSV file created successfully")
 
 driver.quit()
